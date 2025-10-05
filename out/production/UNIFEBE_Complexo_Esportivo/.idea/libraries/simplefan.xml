@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="simplefan">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/lib/simplefan.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
