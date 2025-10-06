@@ -3,7 +3,7 @@ package model.dao;
 public class Ambientes {
 
     // Atributos
-    private String nomeAmbiente;
+    private String nome_Ambiente;
     private String descricao;
 
 
@@ -13,11 +13,11 @@ public class Ambientes {
 
     // Get and set
     public String getNomeAmbiente() {
-        return nomeAmbiente;
+        return nome_Ambiente;
     }
 
-    public void setNomeAmbiente(String nomeAmbiente) {
-        this.nomeAmbiente = nomeAmbiente;
+    public void setNomeAmbiente(String nome_Ambiente) {
+        this.nome_Ambiente = nome_Ambiente;
     }
 
     public String getDescricao() {
