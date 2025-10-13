@@ -10,11 +10,10 @@ public class ConexaoDB {
     private Connection Conn = null;
     private Statement s = null;
 
-    public ConexaoDB(String IP, String database) {
+    public ConexaoDB(String IP, String database, String user, String senha) {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
-            this.Conn = DriverManager.getConnection("jdbc:oracle:thin:dev/dev@" + IP + ":1521:" + database);
-                    //"jdbc:oracle:thin:@" + IP + ":1521:" + database
+            this.Conn = DriverManager.getConnection("jdbc:oracle:thin:" + user + "/" + senha + "@" + IP + ":1521:" + database);
             this.s = this.Conn.createStatement();
             System.out.println("Conectado ao banco de dados: "+database);
         }catch (SQLException | ClassNotFoundException e){

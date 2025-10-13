@@ -3,8 +3,8 @@ package model.dao;
 public class AmbienteAgendamento {
 
     // Atributos
-    private int AGENDAMENTOS_id_AGENDAMENTOS;
-    private int AMBIENTES_id_AMBIENTES;
+    private int AGENDAMENTOS_ID_AGENDAMENTOS;
+    private int AMBIENTES_ID_AMBIENTES;
 
 
     // Construtor
@@ -12,19 +12,19 @@ public class AmbienteAgendamento {
     }
 
     // Get and set
-    public int getAGENDAMENTOS_id_AGENDAMENTOS() {
-        return AGENDAMENTOS_id_AGENDAMENTOS;
+    public int getAGENDAMENTOS_ID_AGENDAMENTOS() {
+        return AGENDAMENTOS_ID_AGENDAMENTOS;
     }
 
-    public void setAGENDAMENTOS_id_AGENDAMENTOS(int AGENDAMENTOS_idAGENDAMENTOS) {
-        this.AGENDAMENTOS_id_AGENDAMENTOS = AGENDAMENTOS_idAGENDAMENTOS;
+    public void setAGENDAMENTOS_ID_AGENDAMENTOS(int AGENDAMENTOS_ID_AGENDAMENTOS) {
+        this.AGENDAMENTOS_ID_AGENDAMENTOS = AGENDAMENTOS_ID_AGENDAMENTOS;
     }
 
-    public int getAMBIENTES_id_AMBIENTES() {
-        return AMBIENTES_id_AMBIENTES;
+    public int getAMBIENTES_ID_AMBIENTES() {
+        return AMBIENTES_ID_AMBIENTES;
     }
 
-    public void setAMBIENTES_id_AMBIENTES(int AMBIENTES_id_AMBIENTES) {
-        this.AMBIENTES_id_AMBIENTES = AMBIENTES_id_AMBIENTES;
+    public void setAMBIENTES_ID_AMBIENTES(int AMBIENTES_ID_AMBIENTES) {
+        this.AMBIENTES_ID_AMBIENTES = AMBIENTES_ID_AMBIENTES;
     }
 }
