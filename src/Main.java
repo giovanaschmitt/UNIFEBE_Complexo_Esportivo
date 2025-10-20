@@ -1,4 +1,4 @@
-import model.dao.ConexaoDB;
+import controller.UsuarioController;
 
 public class Main {
     public static void main(String[] args) {
@@ -7,8 +7,11 @@ public class Main {
         String IP = "192.168.1.107";
         String user = "dev";
         String senha = "dev";
-        //teste
 
-        ConexaoDB db = new ConexaoDB(IP, database, user, senha);
+        // Criar controller de usuário
+        UsuarioController usuarioController = new UsuarioController(IP, database, user, senha);
+
+        // Exibir menu
+        usuarioController.exibirMenu();
     }
 }

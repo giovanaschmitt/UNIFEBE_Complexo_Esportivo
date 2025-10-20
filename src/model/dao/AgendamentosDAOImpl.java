@@ -16,12 +16,11 @@ public class AgendamentosDAOImpl {
     }
 
     // Inserir agendamento
-    // --> tenho de ver como fazer a inserção com a sequence no banco
     public int inserirAgendamento(Agendamentos agendamento){
         int linhasAfetadas = 0;
         try{
             String SQL = "INSERT INTO dev.agendamentos (id_AGENDAMENTOS, AMBIENTE_id_AMBIENTES, USUARIO_id_USUARIO, Data_Hora_Inicio, Data_Hora_Fim) " +
-                           "VALUES ('"+aluno.getNome()+"','"+aluno.getCurso()+"', '"+aluno.getMatricula()+"',"+aluno.getFase()+")";
+                    "VALUES ("+agendamento.getID_AGENDAMENTOS()+",'"+agendamento.getAMBIENTE_ID_AMBIENTES()+"', '"+agendamento.getUSUARIO_ID_USUARIO()+"','"+agendamento.getDataHoraInicio()+"','"+agendamento.getDataHoraFim()+"')";
             linhasAfetadas = this.s.executeUpdate(SQL); //executa
             System.out.println("Dados Inseridos: "+linhasAfetadas);
 
@@ -32,7 +31,6 @@ public class AgendamentosDAOImpl {
     }
 
     // Selecionar todos os dados da tabela
-    //--> Testar implementação do select
     public ArrayList<Agendamentos> selectAgendamentos(){
         ArrayList<Agendamentos> lista = new ArrayList<>();
         try{
