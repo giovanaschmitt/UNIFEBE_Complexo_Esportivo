@@ -13,13 +13,40 @@ public class UsuarioDAOImpl {
         this.s = db.getS();
     }
 
+    // Confirmar alterações
+    public boolean commitInsert() {
+        try {
+            String SQL = "commit";
+            this.s.executeUpdate(SQL);
+            System.out.println("Commit realizado");
+        } catch (Exception e) {
+            System.out.println("Erro no commit: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    // Cancelar alterações
+    public boolean rollbackInsert() {
+        try {
+            String SQL = "rollback";
+            this.s.executeUpdate(SQL);
+            System.out.println("Rollback realizado");
+        } catch (Exception e) {
+            System.out.println("Erro no rollback: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+
 //NOVO USUARIO
     public int inserirUsuario(Usuario usuario) {
         int linhasAfetadas = 0;
         try {
             // GERADOR DE ID AUTOMATICO
-            String SQL = "INSERT INTO dev.usuario (id_USUARIO, Nome, Matricula, Senha, Tipo) " +
-                    "VALUES (dev.increment_usuario.nextval, '" + usuario.getNome() + "', " +
+            String SQL = "INSERT INTO sisagenda.usuario (id_USUARIO, Nome, Matricula, Senha, Tipo) " +
+                    "VALUES (sisagenda.increment_usuario.nextval, '" + usuario.getNome() + "', " +
                     usuario.getMatricula() + ", '" + usuario.getSenha() + "', '" + usuario.getTipo() + "')";
             linhasAfetadas = this.s.executeUpdate(SQL);
             System.out.println("Usuário Inserido com sucesso: " + linhasAfetadas + " linha(s)");
@@ -34,7 +61,7 @@ public class UsuarioDAOImpl {
     public Usuario buscarUsuarioPorMatricula(int matricula) {
         Usuario usuario = null;
         try {
-            String SQL = "SELECT * FROM dev.usuario WHERE Matricula = " + matricula;
+            String SQL = "SELECT * FROM sisagenda.usuario WHERE Matricula = " + matricula;
             ResultSet rset = s.executeQuery(SQL);
 
             if (rset.next()) {

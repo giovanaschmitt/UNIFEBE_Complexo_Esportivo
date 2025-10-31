@@ -3,12 +3,18 @@ package model.dao;
 public class Ambientes {
 
     // Atributos
+    private int id_AMBIENTES;
     private String nome_ambiente;
     private String descricao;
 
 
     // Construtor
     public Ambientes() {
+    }
+
+    // Get id
+    public int getId_AMBIENTES() {
+        return id_AMBIENTES;
     }
 
     // Get and set
