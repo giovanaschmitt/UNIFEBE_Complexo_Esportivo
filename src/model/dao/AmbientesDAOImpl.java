@@ -1,6 +1,8 @@
 package model.dao;
 
 // Bibliotecas
+import controller.CredenciaisBanco;
+
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -10,8 +12,14 @@ public class AmbientesDAOImpl implements IAmbientesDAOImpl {
     // Atributos
     private Statement s = null;
 
-    public AmbientesDAOImpl(String IP, String database, String user, String senha) {
-        ConexaoDB db = new ConexaoDB(IP, database, user, senha);
+    public AmbientesDAOImpl() {
+        CredenciaisBanco credencial = new CredenciaisBanco();
+        ConexaoDB db = new ConexaoDB(
+                credencial.getIP(),
+                credencial.getDatabase(),
+                credencial.getUser(),
+                credencial.getPwd_banco()
+        );
         this.s = db.getS();
     }
 

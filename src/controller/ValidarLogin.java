@@ -5,10 +5,9 @@ import model.dao.Login;
 public class ValidarLogin {
 
     // Atributos
-    private Login login;
+    private Login login = new Login();
 
-    public ValidarLogin(String IP, String database, String user, String senha) {
-        this.login = new Login(IP, database, user, senha);
+    public ValidarLogin() {
     }
 
     // Validar a entrada do usuário

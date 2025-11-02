@@ -1,100 +1,84 @@
 import controller.ValidarLogin;
-import model.dao.Agendamentos;
 import model.dao.AgendamentosDAOImpl;
-import model.dao.Ambientes;
-import model.dao.AmbientesDAOImpl;
+import model.dao.Usuario;
+import model.dao.UsuarioDAOImpl;
 
-import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
 
-        /*
-        Lembrete: Ao final de todas as alteações deve-se chamar a função de commit ou rollback
-        disponível em cada classe de implementação para garantir o funcionamento correto do
-        sistema
-         */
-        String database = "orcl";
-        String IP = "192.168.1.9";
-        String user = "sisagenda";
-        String senha = "sisagenda";
+    // Custom
+    final String RESET = "\u001B[0m";
+    final String BLUE = "\u001B[34m";
+    final String RED = "\u001B[31m";
+    final String GREEN = "\u001B[32m";
 
-        // Criar controller de usuário
-        //UsuarioController usuarioController = new UsuarioController(IP, database, user, senha);
+    private ValidarLogin validarLogin = new ValidarLogin();
 
-        // Exibir menu
-        //usuarioController.exibirMenu();
-        //ConexaoDB db = new ConexaoDB(IP, database, user, senha);
-        /*
-        AmbientesDAOImpl teste = new AmbientesDAOImpl(IP, database, user, senha);
+    private void run(){
+        // Atributos
+        Scanner leia = new Scanner(System.in);
+        Usuario usuario;
+        int replay = 1;
 
-        Ambientes ambiente = new Ambientes();
-        ambiente.setNome_ambiente("teste_update");
-        ambiente.setDescricao("teste_update");
-        ambiente.setId_AMBIENTES(23);
 
-        */
-        //teste.inserirAmbiente(ambiente);
-        //teste.removerAmbiente(ambiente);
-        //teste.atualizarAmbiente(ambiente);
-        /*
-        ArrayList<Ambientes> a = teste.buscarAmbientePorNome("de");
+        System.out.println(this.BLUE +"=========================================================================" + this.RESET);
+        System.out.println(this.BLUE +"== SISTEMA DE AGENDAMENTO DOS ESPAÇOS DO COMPLEXO ESPORTIVO DA UNIFEBE ==" + this.RESET);
+        System.out.println(this.BLUE +"=========================================================================" + this.RESET);
 
-        if (!a.isEmpty()) {
-            for (int i = 0; i < a.size(); i++) {
-                Ambientes imprimir = a.get(i);
-                System.out.println(imprimir.getId_AMBIENTES() + " " + imprimir.getNome_ambiente());
+        do {
+            System.out.print("\n");
+            System.out.print("Digite sua matrícula: ");
+            int matricula = leia.nextInt();
+            System.out.print("Digite sua senha: ");
+            String senha = leia.next();
+
+            if (this.validarLogin.validarEntrada(matricula, senha)) {
+                System.out.println(this.GREEN + "\nLogin validado!\n" + this.RESET);
+
+                UsuarioDAOImpl funcaoUser = new UsuarioDAOImpl();
+                funcaoUser.buscarUsuarioPorMatricula(matricula);
+
+                //switch ()
+
+            } else {
+                System.out.println(this.RED + "\nMatrícula ou senha incorreta!\n" + this.RESET);
+                System.out.println("Deseja tentar novamente?");
+                System.out.println("Sim -> 1");
+                System.out.println("Não -> 2");
+                System.out.print("\nEscolha: ");
+                replay = leia.nextInt();
             }
-        } else {
-            System.out.println("Sem resultado");
-        }
 
+        } while (replay == 1);
+        System.out.println("\nSistema encerrando...");
 
-        ArrayList<Ambientes> ambientes = teste.consultarAmbientes();
-
-        for (int i = 0; i < ambientes.size(); i++) {
-            Ambientes imprimir = ambientes.get(i);
-            System.out.println(imprimir.getId_AMBIENTES() + " " + imprimir.getNome_ambiente());
-        }
-        */
+        //String opcao = leia.next();
         /*
-        int matricula = 2024100100;
-        String pwd = "12";
-
-
-        ValidarLogin valida = new ValidarLogin(IP, database, user, senha);
-        if (valida.validarEntrada(matricula, pwd)) {
-            System.out.println("Entrada VÁLIDA");
-        } else {
-            System.out.println("Entrada inválida");
+        switch (Integer.parseInt(opcao)){
+            case 1:
+                if(controllerLogin.validarEntrada("user1","123456")){
+                    //new TelaUsuario().sayHello();
+                }else{
+                    System.out.println("Dados incorretos!");
+                }
+                break;
+            case 2: //new TelaAdmin().sayHello();
+                break;
+            case 3: System.exit(0);
+                break;
+            default:
+                System.out.println("Opção Inválida!");
+                break;
         }
 
          */
-
-        AgendamentosDAOImpl teste = new AgendamentosDAOImpl(IP, database, user, senha);
-
-        System.out.println(teste.solicitaHorario("04/11/2025 09:01:48", "04/11/2025 10:01:48", 3));
-
-/*
-        ArrayList<Agendamentos> a = teste.consultarAgendamentosAmbienteFuturos(3);
-
-        for (int i = 0; i < a.size(); i++) {
-            Agendamentos imprimir = a.get(i);
-            System.out.println(
-                    "\n" + imprimir.getID_AGENDAMENTOS() +
-                            "\n" + imprimir.getAMBIENTE_ID_AMBIENTES() +
-                            "\n" + imprimir.getUSUARIO_ID_USUARIO() +
-                            "\n" + imprimir.getData_Hora_Inicio() +
-                            "\n" + imprimir.getData_Hora_Fim() +
-                            "\n" + imprimir.getData_Hora_Agendamento() +
-                            "\n" + imprimir.getStatus_agendamento() + "\n"
-            );
+    }
 
 
-        }
-
- */
 
 
+    public static void main(String[] args) {
+        new Main().run();
     }
 }

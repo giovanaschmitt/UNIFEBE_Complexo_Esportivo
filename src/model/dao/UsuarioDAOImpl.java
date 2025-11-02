@@ -1,5 +1,7 @@
 package model.dao;
 
+import controller.CredenciaisBanco;
+
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -9,8 +11,14 @@ public class UsuarioDAOImpl implements IUsuarioDAOImpl {
     // Atributos
     private Statement s = null;
 
-    public UsuarioDAOImpl(String IP, String database, String user, String senha) {
-        ConexaoDB db = new ConexaoDB(IP, database, user, senha);
+    public UsuarioDAOImpl() {
+        CredenciaisBanco credencial = new CredenciaisBanco();
+        ConexaoDB db = new ConexaoDB(
+                credencial.getIP(),
+                credencial.getDatabase(),
+                credencial.getUser(),
+                credencial.getPwd_banco()
+        );
         this.s = db.getS();
     }
 
@@ -52,7 +60,7 @@ public class UsuarioDAOImpl implements IUsuarioDAOImpl {
         return linhasAfetadas;
     }
 
-    // Buscar usuário por matícula
+    // Buscar usuário por matrícula
     @Override
     public Usuario buscarUsuarioPorMatricula(int matricula) {
         Usuario usuario = null;

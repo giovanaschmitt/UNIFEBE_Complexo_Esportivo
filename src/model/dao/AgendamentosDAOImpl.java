@@ -1,6 +1,8 @@
 package model.dao;
 
 // Bibliotecas
+import controller.CredenciaisBanco;
+
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
@@ -12,11 +14,17 @@ public class AgendamentosDAOImpl implements IAgendamentosDAOImpl {
 
     // Atributos
     private Statement s = null;
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH24:mm:ss");
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH24:mm:ss");
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
-    public AgendamentosDAOImpl(String IP, String database, String user, String senha) {
-        ConexaoDB db = new ConexaoDB(IP, database, user, senha);
+    public AgendamentosDAOImpl() {
+        CredenciaisBanco credencial = new CredenciaisBanco();
+        ConexaoDB db = new ConexaoDB(
+                credencial.getIP(),
+                credencial.getDatabase(),
+                credencial.getUser(),
+                credencial.getPwd_banco()
+        );
         this.s = db.getS();
     }
 
@@ -39,7 +47,7 @@ public class AgendamentosDAOImpl implements IAgendamentosDAOImpl {
                         agendamento.getUSUARIO_ID_USUARIO() + "', " +
                         "TO_DATE(agendamento.getData_Hora_Inicio(), 'DD/MM/YYYY HH24:MI:SS')," +
                         "TO_DATE(tagendamento.getData_Hora_Fim() 'DD/MM/YYYY HH24:MI:SS'),"+
-                        "TO_DATE(tagendamento.getData_Hora_Fim() 'DD/MM/YYYY HH24:MI:SS'), '"+
+                        "TO_DATE(tagendamento.getData_Hora_Agendamento() 'DD/MM/YYYY HH24:MI:SS'), '"+
                         agendamento.getStatus_agendamento() + "')";
 
             linhasAfetadas = this.s.executeUpdate(SQL);
@@ -71,10 +79,8 @@ public class AgendamentosDAOImpl implements IAgendamentosDAOImpl {
         // Consulta todos os agendamentos futuros no banco referentes aquele ambiente
         ArrayList<Agendamentos> lista = this.consultarAgendamentosAmbienteFuturos(id_ambiente);
 
-
         if (!lista.isEmpty()) {
             for (int i = 0; i < lista.size(); i++) {
-                System.out.println("rep");
                 Agendamentos agendamento = lista.get(i);
 
                 // Dados dos agendamentos já agendados
@@ -82,24 +88,17 @@ public class AgendamentosDAOImpl implements IAgendamentosDAOImpl {
                 LocalDateTime fim = LocalDateTime.parse(agendamento.getData_Hora_Fim(), formatter);
 
                 if (agendamento.getStatus_agendamento() != 'I') {
-                    System.out.println(inicio);
-                    System.out.println(inicio_solicitado);
                     if (inicio_solicitado.isBefore(inicio) || fim_solicitado.isBefore(inicio)) {
-                        System.out.println("a");
                         status = true;
                     } else if (inicio_solicitado.isAfter(fim)) {
-                        System.out.println("b");
                         status = true;
                     } else {
-                        System.out.println("c");
                         status = false;
                     }
                 }
-                System.out.println(status);
             }
         } else {
             // Valida o insert se nenhum registro for encontrado
-            System.out.println("Caminho errado");
             return true;
         }
         return status;

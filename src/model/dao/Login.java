@@ -1,5 +1,7 @@
 package model.dao;
 
+import controller.CredenciaisBanco;
+
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -8,8 +10,14 @@ public class Login {
     // Atributos
     private Statement s = null;
 
-    public Login (String IP, String database, String user, String senha) {
-        ConexaoDB db = new ConexaoDB(IP, database, user, senha);
+    public Login () {
+        CredenciaisBanco credencial = new CredenciaisBanco();
+        ConexaoDB db = new ConexaoDB(
+                credencial.getIP(),
+                credencial.getDatabase(),
+                credencial.getUser(),
+                credencial.getPwd_banco()
+        );
         this.s = db.getS();
     }
 
