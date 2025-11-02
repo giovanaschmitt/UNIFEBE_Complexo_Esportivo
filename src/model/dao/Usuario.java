@@ -6,6 +6,7 @@ public class Usuario {
     private String nome;
     private String senha;
     private int matricula;
+    private int id_USUARIO;
     private char tipo;
 
 
@@ -36,6 +37,14 @@ public class Usuario {
 
     public void setMatricula(int matricula) {
         this.matricula = matricula;
+    }
+
+    public int getId_USUARIO() {
+        return id_USUARIO;
+    }
+
+    public void setId_USUARIO(int id_USUARIO) {
+        this.id_USUARIO = id_USUARIO;
     }
 
     public char getTipo() {

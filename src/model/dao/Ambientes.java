@@ -12,17 +12,20 @@ public class Ambientes {
     public Ambientes() {
     }
 
-    // Get id
+    // Get and set
     public int getId_AMBIENTES() {
         return id_AMBIENTES;
     }
 
-    // Get and set
-    public String getNomeAmbiente() {
+    public void setId_AMBIENTES(int id_AMBIENTES) {
+        this.id_AMBIENTES = id_AMBIENTES;
+    }
+
+    public String getNome_ambiente() {
         return nome_ambiente;
     }
 
-    public void setNomeAmbiente(String nome_ambiente) {
+    public void setNome_ambiente(String nome_ambiente) {
         this.nome_ambiente = nome_ambiente;
     }
 

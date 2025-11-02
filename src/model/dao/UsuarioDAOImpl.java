@@ -4,8 +4,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class UsuarioDAOImpl {
+public class UsuarioDAOImpl implements IUsuarioDAOImpl {
 
+    // Atributos
     private Statement s = null;
 
     public UsuarioDAOImpl(String IP, String database, String user, String senha) {
@@ -13,41 +14,19 @@ public class UsuarioDAOImpl {
         this.s = db.getS();
     }
 
-    // Confirmar alterações
-    public boolean commitInsert() {
-        try {
-            String SQL = "commit";
-            this.s.executeUpdate(SQL);
-            System.out.println("Commit realizado");
-        } catch (Exception e) {
-            System.out.println("Erro no commit: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return true;
-    }
 
-    // Cancelar alterações
-    public boolean rollbackInsert() {
-        try {
-            String SQL = "rollback";
-            this.s.executeUpdate(SQL);
-            System.out.println("Rollback realizado");
-        } catch (Exception e) {
-            System.out.println("Erro no rollback: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return true;
-    }
-
-
-//NOVO USUARIO
+    // Inserir um novo usuário
+    @Override
     public int inserirUsuario(Usuario usuario) {
         int linhasAfetadas = 0;
+
         try {
-            // GERADOR DE ID AUTOMATICO
             String SQL = "INSERT INTO sisagenda.usuario (id_USUARIO, Nome, Matricula, Senha, Tipo) " +
-                    "VALUES (sisagenda.increment_usuario.nextval, '" + usuario.getNome() + "', " +
-                    usuario.getMatricula() + ", '" + usuario.getSenha() + "', '" + usuario.getTipo() + "')";
+                         "VALUES (sisagenda.increment_usuario.nextval, '" +
+                                  usuario.getNome() + "', " +
+                                  usuario.getMatricula() + ", '" +
+                                  usuario.getSenha() + "', '" +
+                                  usuario.getTipo() + "')";
             linhasAfetadas = this.s.executeUpdate(SQL);
             System.out.println("Usuário Inserido com sucesso: " + linhasAfetadas + " linha(s)");
         } catch (Exception e) {
@@ -56,10 +35,28 @@ public class UsuarioDAOImpl {
         }
         return linhasAfetadas;
     }
+    // Remover um usuário por matrícula
+    @Override
+    public int removerUsuarioPorMaticula(Usuario usuario) {
+        int linhasAfetadas = 0;
 
-// BUSCA MATRICULA
+        try {
+            String SQL = "DELETE sisagenda.usuario " +
+                         "WHERE matricula = " + usuario.getMatricula();
+            linhasAfetadas = this.s.executeUpdate(SQL);
+            System.out.println("Usuário removido com sucesso: " + linhasAfetadas + " linha(s)");
+        } catch (Exception e) {
+            System.out.println("Erro ao remover usuário: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return linhasAfetadas;
+    }
+
+    // Buscar usuário por matícula
+    @Override
     public Usuario buscarUsuarioPorMatricula(int matricula) {
         Usuario usuario = null;
+
         try {
             String SQL = "SELECT * FROM sisagenda.usuario WHERE Matricula = " + matricula;
             ResultSet rset = s.executeQuery(SQL);
@@ -80,29 +77,37 @@ public class UsuarioDAOImpl {
     }
 
 
- //BUSCA NOME
-    public Usuario buscarUsuarioPorNome(String nome) {
-        Usuario usuario = null;
+    // Consultar usuário por nome
+    @Override
+    public ArrayList<Usuario> buscarUsuarioPorNome(String nome) {
+        ArrayList<Usuario> lista = new ArrayList<>();
+
         try {
-            String SQL = "SELECT * FROM dev.usuario WHERE Nome = '" + nome + "'";
+            String SQL = "SELECT * FROM sisagenda.usuario WHERE Nome LIKE '%" + nome + "%'";
             ResultSet rset = s.executeQuery(SQL);
 
-            if (rset.next()) {
-                usuario = new Usuario();usuario.setNome(rset.getString("Nome"));
+            while (rset.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setNome(rset.getString("Nome"));
                 usuario.setSenha(rset.getString("Senha"));
                 usuario.setMatricula(rset.getInt("Matricula"));
                 usuario.setTipo(rset.getString("Tipo").charAt(0));
+                lista.add(usuario);
             }
-        } catch (Exception e) {System.out.println("Erro ao buscar usuário: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar usuário: " + e.getMessage());
             e.printStackTrace();
         }
-        return usuario;
+        return lista;
     }
-    //LISTA DE USUÁRIO
+
+    // Consultar todos os usuários
+    @Override
     public ArrayList<Usuario> selectUsuarios() {
         ArrayList<Usuario> lista = new ArrayList<>();
+
         try {
-            String SQL = "SELECT * FROM dev.usuario";
+            String SQL = "SELECT * FROM sisagenda.usuario";
             ResultSet rset = s.executeQuery(SQL);
 
             while (rset.next()) {

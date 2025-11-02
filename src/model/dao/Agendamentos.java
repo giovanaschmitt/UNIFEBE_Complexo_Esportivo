@@ -6,8 +6,10 @@ public class Agendamentos {
     private int ID_AGENDAMENTOS;
     private int AMBIENTE_ID_AMBIENTES;
     private int USUARIO_ID_USUARIO;
-    private String data_hora_inicio;
-    private String data_hora_fim;
+    private String Data_Hora_Inicio;
+    private String Data_Hora_Fim;
+    private String Data_Hora_Agendamento;
+    private char Status_agendamento;
 
 
     // Construtor
@@ -39,19 +41,36 @@ public class Agendamentos {
         this.USUARIO_ID_USUARIO = USUARIO_ID_USUARIO;
     }
 
-    public String getDataHoraInicio() {
-        return data_hora_inicio;
+    public String getData_Hora_Inicio() {
+        return Data_Hora_Inicio;
     }
 
-    public void setDataHoraInicio(String data_hora_inicio) {
-        this.data_hora_inicio = data_hora_inicio;
+    public void setData_Hora_Inicio(String data_Hora_Inicio) {
+        Data_Hora_Inicio = data_Hora_Inicio;
     }
 
-    public String getDataHoraFim() {
-        return data_hora_fim;
+    public String getData_Hora_Fim() {
+        return Data_Hora_Fim;
     }
 
-    public void setDataHoraFim(String dataHoraFim) {
-        this.data_hora_fim = data_hora_fim;
+    public void setData_Hora_Fim(String data_Hora_Fim) {
+        Data_Hora_Fim = data_Hora_Fim;
     }
+
+    public String getData_Hora_Agendamento() {
+        return Data_Hora_Agendamento;
+    }
+
+    public void setData_Hora_Agendamento(String data_Hora_Agendamento) {
+        Data_Hora_Agendamento = data_Hora_Agendamento;
+    }
+
+    public char getStatus_agendamento() {
+        return Status_agendamento;
+    }
+
+    public void setStatus_agendamento(char status) {
+        Status_agendamento = status;
+    }
+
 }

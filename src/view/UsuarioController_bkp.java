@@ -1,16 +1,17 @@
-package controller;
+package view;
 
 import model.dao.Usuario;
 import model.dao.UsuarioDAOImpl;
-import java.util.Scanner;
-import java.util.ArrayList;
 
-public class UsuarioController {
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class UsuarioController_bkp {
 
     private UsuarioDAOImpl usuarioDAO;
     private Scanner scanner;
 
-    public UsuarioController(String IP, String database, String user, String senha) {
+    public UsuarioController_bkp(String IP, String database, String user, String senha) {
         this.usuarioDAO = new UsuarioDAOImpl(IP, database, user, senha);
         this.scanner = new Scanner(System.in);
 
