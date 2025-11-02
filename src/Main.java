@@ -2,12 +2,14 @@ import controller.ValidarLogin;
 import model.dao.AgendamentosDAOImpl;
 import model.dao.Usuario;
 import model.dao.UsuarioDAOImpl;
+import view.TelaAdmin;
+import view.TelaUsuario;
 
 import java.util.Scanner;
 
 public class Main {
 
-    // Custom
+    // Códigos ANSI
     final String RESET = "\u001B[0m";
     final String BLUE = "\u001B[34m";
     final String RED = "\u001B[31m";
@@ -20,6 +22,7 @@ public class Main {
         Scanner leia = new Scanner(System.in);
         Usuario usuario;
         int replay = 1;
+        int opcao = 0;
 
 
         System.out.println(this.BLUE +"=========================================================================" + this.RESET);
@@ -37,9 +40,25 @@ public class Main {
                 System.out.println(this.GREEN + "\nLogin validado!\n" + this.RESET);
 
                 UsuarioDAOImpl funcaoUser = new UsuarioDAOImpl();
-                funcaoUser.buscarUsuarioPorMatricula(matricula);
+                usuario = funcaoUser.buscarUsuarioPorMatricula(matricula);
 
-                //switch ()
+                switch (usuario.getTipo()) {
+                    case 'A':
+                        new TelaAdmin().sayHello(usuario.getNome());
+                        new TelaAdmin().opcoesAcoes();
+                        new TelaAdmin().gerenciarUsuarios();
+                        new TelaAdmin().gerenciarAmbientes();
+                        new TelaAdmin().gerenciarAgendamentos();
+                        break;
+                    case 'C':
+                        new TelaUsuario().sayHello(usuario.getNome());
+                        new TelaUsuario().opcoesAcoes();
+
+                        break;
+                    default:
+                        System.out.println(this.RED + "\nErro ao validar o tipo do usuário!" + this.RESET);
+                        break;
+                }
 
             } else {
                 System.out.println(this.RED + "\nMatrícula ou senha incorreta!\n" + this.RESET);
@@ -53,29 +72,8 @@ public class Main {
         } while (replay == 1);
         System.out.println("\nSistema encerrando...");
 
-        //String opcao = leia.next();
-        /*
-        switch (Integer.parseInt(opcao)){
-            case 1:
-                if(controllerLogin.validarEntrada("user1","123456")){
-                    //new TelaUsuario().sayHello();
-                }else{
-                    System.out.println("Dados incorretos!");
-                }
-                break;
-            case 2: //new TelaAdmin().sayHello();
-                break;
-            case 3: System.exit(0);
-                break;
-            default:
-                System.out.println("Opção Inválida!");
-                break;
-        }
 
-         */
     }
-
-
 
 
     public static void main(String[] args) {

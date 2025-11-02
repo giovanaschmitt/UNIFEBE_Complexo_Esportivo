@@ -30,7 +30,7 @@ public class AgendamentosDAOImpl implements IAgendamentosDAOImpl {
 
     // Inserir agendamento
     @Override
-    public int inserirAmbiente(Agendamentos agendamento) {
+    public int inserirAgendamento(Agendamentos agendamento) {
         int linhasAfetadas = 0;
 
         try {
@@ -177,7 +177,7 @@ public class AgendamentosDAOImpl implements IAgendamentosDAOImpl {
         return lista;
     }
 
-    // Consultar todos os agendamentos de um ambiente
+    // Consultar todos os agendamentos futuros de um ambiente
     @Override
     public ArrayList<Agendamentos> consultarAgendamentosAmbienteFuturos(int id_ambiente) {
         ArrayList<Agendamentos> lista = new ArrayList<>();

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface IAgendamentosDAOImpl {
     // Inserir agendamento
-    int inserirAmbiente(Agendamentos agendamento);
+    int inserirAgendamento(Agendamentos agendamento);
 
     // Validar horário solicitado
     boolean solicitaHorario(String Data_Hora_Inicio, String Data_Hora_Fim, int id_ambiente);
@@ -18,6 +18,6 @@ public interface IAgendamentosDAOImpl {
     // Consultar todos os agendamentos de um ambiente
     ArrayList<Agendamentos> consultarAgendamentosAmbiente(int id_ambiente);
 
-    // Consultar todos os agendamentos de um ambiente
+    // Consultar todos os agendamentos futuros de um ambiente
     ArrayList<Agendamentos> consultarAgendamentosAmbienteFuturos(int id_ambiente);
 }
