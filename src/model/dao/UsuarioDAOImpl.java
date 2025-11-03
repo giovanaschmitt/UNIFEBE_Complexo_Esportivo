@@ -132,4 +132,28 @@ public class UsuarioDAOImpl implements IUsuarioDAOImpl {
         }
         return lista;
     }
+
+    // Consultar usuários por tipo (A = Administrativo, C = Comum)
+    @Override
+    public ArrayList<Usuario> selectUsuariosPorTipo(char tipo) {
+        ArrayList<Usuario> lista = new ArrayList<>();
+
+        try {
+            String SQL = "SELECT * FROM sisagenda.usuario WHERE Tipo = '" + tipo + "'";
+            ResultSet rset = s.executeQuery(SQL);
+
+            while (rset.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setNome(rset.getString("Nome"));
+                usuario.setSenha(rset.getString("Senha"));
+                usuario.setMatricula(rset.getInt("Matricula"));
+                usuario.setTipo(rset.getString("Tipo").charAt(0));
+                lista.add(usuario);
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar usuários por tipo: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return lista;
+    }
 }
