@@ -28,6 +28,7 @@ public class AgendamentosDAOImpl implements IAgendamentosDAOImpl {
         this.s = db.getS();
     }
 
+
     // Inserir agendamento
     @Override
     public int inserirAgendamento(Agendamentos agendamento) {
