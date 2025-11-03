@@ -17,4 +17,7 @@ public interface IUsuarioDAOImpl {
 
     // Consultar todos os usuários
     ArrayList<Usuario> selectUsuarios();
+
+    // Consultar usuários por tipo (A = Administrativo, C = Comum)
+    ArrayList<Usuario> selectUsuariosPorTipo(char tipo);
 }

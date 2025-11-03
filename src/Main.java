@@ -5,6 +5,7 @@ import model.dao.UsuarioDAOImpl;
 import view.TelaAdmin;
 import view.TelaUsuario;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -57,7 +58,7 @@ public class Main {
 
                             switch (this.opcao) {
                                 case 1:
-                                    new TelaAdmin().gerenciarUsuarios();
+                                    new Main().gerenciarUsuariosMenu(usuario);
                                     break;
 
                                 case 2:
@@ -187,6 +188,161 @@ public class Main {
 
                 default:
                     new TelaUsuario().opcaoInvalida();
+                    break;
+            }
+
+        } while (this.replay == 1);
+    }
+
+    public void gerenciarUsuariosMenu(Usuario usuarioLogado) {
+        // Atributos
+        this.replay = 1;
+        this.opcao = 0;
+        UsuarioDAOImpl usuarioDAO = new UsuarioDAOImpl();
+
+        do {
+            new TelaAdmin().gerenciarUsuarios();
+            this.opcao = this.leia.nextInt();
+
+            switch (this.opcao) {
+                case 1: // Adicionar um novo usuário
+                    System.out.println("\n=== ADICIONAR NOVO USUÁRIO ===");
+                    System.out.print("Digite o nome do usuário: ");
+                    this.leia.nextLine(); // Limpa o buffer
+                    String nome = this.leia.nextLine();
+                    System.out.print("Digite a matrícula: ");
+                    int matricula = this.leia.nextInt();
+                    System.out.print("Digite a senha: ");
+                    String senha = this.leia.next();
+                    System.out.print("Digite o tipo (A = Administrativo, C = Comum): ");
+                    char tipo = this.leia.next().toUpperCase().charAt(0);
+
+                    // Validar tipo
+                    if (tipo != 'A' && tipo != 'C') {
+                        System.out.println(this.RED + "Tipo inválido! Use 'A' para Administrativo ou 'C' para Comum." + this.RESET);
+                        break;
+                    }
+
+                    Usuario novoUsuario = new Usuario();
+                    novoUsuario.setNome(nome);
+                    novoUsuario.setMatricula(matricula);
+                    novoUsuario.setSenha(senha);
+                    novoUsuario.setTipo(tipo);
+
+                    int resultado = usuarioDAO.inserirUsuario(novoUsuario);
+                    if (resultado > 0) {
+                        System.out.println(this.GREEN + "Usuário cadastrado com sucesso!" + this.RESET);
+                    } else {
+                        System.out.println(this.RED + "Erro ao cadastrar usuário." + this.RESET);
+                    }
+                    break;
+
+                case 2: // Remover um usuário através da matrícula
+                    System.out.println("\n=== REMOVER USUÁRIO ===");
+                    System.out.print("Digite a matrícula do usuário a ser removido: ");
+                    int matriculaRemover = this.leia.nextInt();
+
+                    // Buscar o usuário para confirmar
+                    Usuario usuarioRemover = usuarioDAO.buscarUsuarioPorMatricula(matriculaRemover);
+                    if (usuarioRemover != null) {
+                        System.out.println("Usuário encontrado: " + usuarioRemover.getNome() + " - Matrícula: " + usuarioRemover.getMatricula());
+                        System.out.print("Confirma a remoção? (S/N): ");
+                        char confirmacao = this.leia.next().toUpperCase().charAt(0);
+
+                        if (confirmacao == 'S') {
+                            Usuario usuarioParaRemover = new Usuario();
+                            usuarioParaRemover.setMatricula(matriculaRemover);
+                            int resultadoRemocao = usuarioDAO.removerUsuarioPorMaticula(usuarioParaRemover);
+                            if (resultadoRemocao > 0) {
+                                System.out.println(this.GREEN + "Usuário removido com sucesso!" + this.RESET);
+                            } else {
+                                System.out.println(this.RED + "Erro ao remover usuário." + this.RESET);
+                            }
+                        } else {
+                            System.out.println(this.YELLOW + "Remoção cancelada." + this.RESET);
+                        }
+                    } else {
+                        System.out.println(this.RED + "Usuário não encontrado." + this.RESET);
+                    }
+                    break;
+
+                case 3: // Buscar um usuário através da matrícula
+                    System.out.println("\n=== BUSCAR USUÁRIO POR MATRÍCULA ===");
+                    System.out.print("Digite a matrícula: ");
+                    int matriculaBusca = this.leia.nextInt();
+
+                    Usuario usuarioEncontrado = usuarioDAO.buscarUsuarioPorMatricula(matriculaBusca);
+                    if (usuarioEncontrado != null) {
+                        System.out.println("\n" + this.GREEN + "Usuário encontrado:" + this.RESET);
+                        System.out.println("--------------------------------------");
+                        System.out.println("Nome: " + usuarioEncontrado.getNome());
+                        System.out.println("Matrícula: " + usuarioEncontrado.getMatricula());
+                        System.out.println("Tipo: " + (usuarioEncontrado.getTipo() == 'A' ? "Administrativo" : "Comum"));
+                        System.out.println("--------------------------------------");
+                    } else {
+                        System.out.println(this.RED + "Usuário não encontrado." + this.RESET);
+                    }
+                    break;
+
+                case 4: // Buscar um usuário através do nome
+                    System.out.println("\n=== BUSCAR USUÁRIO POR NOME ===");
+                    System.out.print("Digite o nome (ou parte do nome): ");
+                    this.leia.nextLine(); // Limpa o buffer
+                    String nomeBusca = this.leia.nextLine();
+
+                    ArrayList<Usuario> usuariosEncontrados = usuarioDAO.buscarUsuarioPorNome(nomeBusca);
+                    if (!usuariosEncontrados.isEmpty()) {
+                        System.out.println("\n" + this.GREEN + "Usuários encontrados: " + usuariosEncontrados.size() + this.RESET);
+                        System.out.println("--------------------------------------");
+                        for (Usuario u : usuariosEncontrados) {
+                            System.out.println("Nome: " + u.getNome());
+                            System.out.println("Matrícula: " + u.getMatricula());
+                            System.out.println("Tipo: " + (u.getTipo() == 'A' ? "Administrativo" : "Comum"));
+                            System.out.println("--------------------------------------");
+                        }
+                    } else {
+                        System.out.println(this.RED + "Nenhum usuário encontrado com esse nome." + this.RESET);
+                    }
+                    break;
+
+                case 5: // Consultar todos os usuários administrativos
+                    System.out.println("\n=== USUÁRIOS ADMINISTRATIVOS ===");
+                    ArrayList<Usuario> usuariosAdmin = usuarioDAO.selectUsuariosPorTipo('A');
+                    if (!usuariosAdmin.isEmpty()) {
+                        System.out.println(this.GREEN + "Total de usuários administrativos: " + usuariosAdmin.size() + this.RESET);
+                        System.out.println("--------------------------------------");
+                        for (Usuario u : usuariosAdmin) {
+                            System.out.println("Nome: " + u.getNome());
+                            System.out.println("Matrícula: " + u.getMatricula());
+                            System.out.println("--------------------------------------");
+                        }
+                    } else {
+                        System.out.println(this.RED + "Nenhum usuário administrativo encontrado." + this.RESET);
+                    }
+                    break;
+
+                case 6: // Consultar todos os usuários comuns
+                    System.out.println("\n=== USUÁRIOS COMUNS ===");
+                    ArrayList<Usuario> usuariosComuns = usuarioDAO.selectUsuariosPorTipo('C');
+                    if (!usuariosComuns.isEmpty()) {
+                        System.out.println(this.GREEN + "Total de usuários comuns: " + usuariosComuns.size() + this.RESET);
+                        System.out.println("--------------------------------------");
+                        for (Usuario u : usuariosComuns) {
+                            System.out.println("Nome: " + u.getNome());
+                            System.out.println("Matrícula: " + u.getMatricula());
+                            System.out.println("--------------------------------------");
+                        }
+                    } else {
+                        System.out.println(this.RED + "Nenhum usuário comum encontrado." + this.RESET);
+                    }
+                    break;
+
+                case 0:
+                    this.replay = 0;
+                    break;
+
+                default:
+                    new TelaAdmin().opcaoInvalida();
                     break;
             }
 
