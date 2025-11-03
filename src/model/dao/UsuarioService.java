@@ -1,7 +1,5 @@
-package model.service;
+package model.dao;
 
-import model.dao.Usuario;
-import model.dao.UsuarioDAOImpl;
 import java.util.ArrayList;
 
 public class UsuarioService {

@@ -1,10 +1,8 @@
 import controller.ValidarLogin;
-import model.dao.AgendamentosDAOImpl;
-import model.dao.Usuario;
-import model.dao.UsuarioDAOImpl;
-import view.TelaAdmin;
-import view.TelaUsuario;
+import model.dao.*;
+import view.*;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -73,7 +71,7 @@ public class Main {
                                     break;
 
                                 default:
-                                    new TelaAdmin().opcaoInvalida();
+                                    new ElementosComuns().opcaoInvalida();
                                     break;
                             }
 
@@ -100,7 +98,7 @@ public class Main {
                                     break;
 
                                 default:
-                                    new TelaUsuario().opcaoInvalida();
+                                    new ElementosComuns().opcaoInvalida();
                                     break;
                             }
 
@@ -129,6 +127,8 @@ public class Main {
         // Atributos
         this.replay = 1;
         this.opcao = 0;
+        ArrayList<Ambientes> listaAmbientes;
+        AmbientesDAOImpl consultas = new AmbientesDAOImpl();
 
         do {
             new TelaUsuario().consultarAmbientes();
@@ -136,11 +136,40 @@ public class Main {
 
             switch (this.opcao) {
                 case 1: // Consultar todos os ambientes
-                    System.out.println("Consultar todos os ambientes");
+                    System.out.println(this.YELLOW + "\nConsultando ambientes..." + this.RESET);
+
+                    listaAmbientes = consultas.consultarAmbientes();
+
+                    if (!listaAmbientes.isEmpty()) {
+                        System.out.println("\nAmbiente(s) encontrados:");
+                        for (int i = 0; i < listaAmbientes.size(); i++) {
+                            System.out.print("\n");
+                            System.out.println("Ambiente: " + listaAmbientes.get(i).getNome_ambiente());
+                            System.out.println("Descrição: " + listaAmbientes.get(i).getDescricao());
+                        }
+                    } else {
+                        new ElementosComuns().semDadoEncontrado();
+                    }
                     break;
 
                 case 2: // Pesquisar um ambiente
-                    System.out.println("Pesquisar um ambiente");
+                    System.out.print("\nDigite o nome do ambiente para a pesquisa: ");
+                    String nomeTmp = leia.next();
+
+                    System.out.println(this.YELLOW + "\nConsultando ambientes..." + this.RESET);
+
+                    listaAmbientes = consultas.buscarAmbientePorNome(nomeTmp);
+
+                    if (!listaAmbientes.isEmpty()) {
+                        System.out.println("\nAmbiente(s) encontrados:");
+                        for (int i = 0; i < listaAmbientes.size(); i++) {
+                            System.out.print("\n");
+                            System.out.println("Ambiente: " + listaAmbientes.get(i).getNome_ambiente());
+                            System.out.println("Descrição: " + listaAmbientes.get(i).getDescricao());
+                        }
+                    } else {
+                        new ElementosComuns().semDadoEncontrado();
+                    }
                     break;
 
                 case 0:
@@ -148,7 +177,7 @@ public class Main {
                     break;
 
                 default:
-                    new TelaUsuario().opcaoInvalida();
+                    new ElementosComuns().opcaoInvalida();
                     break;
             }
 
@@ -159,6 +188,11 @@ public class Main {
         // Atributos
         this.replay = 1;
         this.opcao = 0;
+        int dia;
+        int mes;
+        int ano;
+        int hora_inicio;
+        int hora_fim;
 
         do {
             new TelaUsuario().agendamentoDeAmbientes();
@@ -167,6 +201,34 @@ public class Main {
             switch (this.opcao) {
                 case 1: // Agendar um ambiente
                     System.out.println("Agendar um ambiente");
+
+                    while (true) {
+                        System.out.print("\nDigite o dia: ");
+                        dia = this.leia.nextInt();
+                        if (dia > 0 && dia < 30) {
+                            break;
+                        }
+                        System.out.println(this.YELLOW + "Dia inválido!" + this.RESET);
+                    }
+
+                    while (true) {
+                        System.out.print("\nDigite o mês: ");
+                        mes = this.leia.nextInt();
+                        if (dia >= 1 && dia <= 12) {
+                            break;
+                        }
+                        System.out.println(this.YELLOW + "Mês inválido!" + this.RESET);
+                    }
+
+                    while (true) {
+                        System.out.print("\nDigite o dia: ");
+                        ano = this.leia.nextInt();
+                        if (ano >= 2025) {
+                            break;
+                        }
+                        System.out.println(this.YELLOW + "Ano inválido!" + this.RESET);
+                    }
+
                     break;
 
                 case 2: // Cancelar um agendamento
@@ -186,16 +248,12 @@ public class Main {
                     break;
 
                 default:
-                    new TelaUsuario().opcaoInvalida();
+                    new ElementosComuns().opcaoInvalida();
                     break;
             }
 
         } while (this.replay == 1);
     }
-
-
-
-
 
     public static void main(String[] args) {
         new Main().run();

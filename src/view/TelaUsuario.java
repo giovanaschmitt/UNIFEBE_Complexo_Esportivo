@@ -12,7 +12,7 @@ public class TelaUsuario {
 
     public void sayHello(String nome) {
         System.out.println("Olá! Bem vindo(a) " + nome + "!");
-        System.out.println(this.YELLOW + "\nVOCÊ ESTÁ LOGADO COM UM USUÁRIO COMUM\n" + this.RESET);
+        System.out.println(this.YELLOW + "\nVOCÊ ESTÁ LOGADO COM UM USUÁRIO COMUM" + this.RESET);
     }
 
     public void opcoesAcoes() {
@@ -37,7 +37,7 @@ public class TelaUsuario {
         System.out.println("- 1 = Consultar todos os ambientes                   -");
         System.out.println("- 2 = Consultar um ambiente pelo seu nome            -");
         System.out.println("-                                                    -");
-        System.out.println("- 0 = Sair do sistema                                -");
+        System.out.println("- 0 = Voltar                                         -");
         System.out.println("------------------------------------------------------");
 
         System.out.print("\nEscolha uma opção: ");
@@ -53,14 +53,10 @@ public class TelaUsuario {
         System.out.println("- 3 = Consultar todos os meus agendamentos             -");
         System.out.println("- 4 = Consultar horários já ocupados de um ambiente    -");
         System.out.println("-                                                      -");
-        System.out.println("- 0 = Sair do sistema                                  -");
+        System.out.println("- 0 = Voltar                                           -");
         System.out.println("--------------------------------------------------------");
 
         System.out.print("\nEscolha uma opção: ");
-    }
-
-    public void opcaoInvalida() {
-        System.out.println(this.YELLOW + "\nOpção inválida" + this.RESET);
     }
 
 }

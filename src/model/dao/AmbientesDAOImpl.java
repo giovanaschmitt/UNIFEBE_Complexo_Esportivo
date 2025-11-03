@@ -86,7 +86,7 @@ public class AmbientesDAOImpl implements IAmbientesDAOImpl {
     public ArrayList<Ambientes> consultarAmbientes() {
         ArrayList<Ambientes> lista = new ArrayList<>();
         try {
-            String SQL = "SELECT * FROM sisagenda.ambientes";
+            String SQL = "SELECT * FROM sisagenda.ambientes ORDER BY Nome_ambiente";
             ResultSet rset = s.executeQuery(SQL);
 
             while (rset.next()) {
@@ -109,7 +109,7 @@ public class AmbientesDAOImpl implements IAmbientesDAOImpl {
         ArrayList<Ambientes> lista = new ArrayList<>();
 
         try {
-            String SQL = "SELECT * FROM sisagenda.ambientes WHERE Nome_ambiente LIKE '%" + nome + "%'";
+            String SQL = "SELECT * FROM sisagenda.ambientes WHERE Nome_ambiente LIKE '%" + nome + "%' ORDER BY Nome_ambiente";
             ResultSet rset = s.executeQuery(SQL);
 
             while (rset.next()) {

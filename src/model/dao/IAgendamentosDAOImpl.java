@@ -20,4 +20,7 @@ public interface IAgendamentosDAOImpl {
 
     // Consultar todos os agendamentos futuros de um ambiente
     ArrayList<Agendamentos> consultarAgendamentosAmbienteFuturos(int id_ambiente);
+
+    // Consultar todos os agendamentos futuros de um user
+    ArrayList<Agendamentos> consultarAgendamentosUsuarioFuturo(int id_ambiente, int id_usuario);
 }

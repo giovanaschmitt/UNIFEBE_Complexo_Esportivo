@@ -209,4 +209,36 @@ public class AgendamentosDAOImpl implements IAgendamentosDAOImpl {
         return lista;
     }
 
+     // Consultar todos os agendamentos futuros de um user
+     @Override
+     public ArrayList<Agendamentos> consultarAgendamentosUsuarioFuturo(int id_ambiente, int id_usuario) {
+        ArrayList<Agendamentos> lista = new ArrayList<>();
+        LocalDateTime agora = LocalDateTime.now();
+        String aux = agora.format(formatter);
+
+        try {
+            String SQL = "SELECT * FROM sisagenda.agendamentos " +
+                         "WHERE USUARIO_id_USUARIO = " + id_usuario +
+                         "Data_Hora_Inicio >= TO_DATE('" + aux + "', 'DD/MM/YYYY HH24:MI:SS')" +
+                         "ORDER BY Data_Hora_Inicio";
+            ResultSet rset = s.executeQuery(SQL);
+
+            while (rset.next()) {
+                Agendamentos agendamento = new Agendamentos();
+                agendamento.setID_AGENDAMENTOS(rset.getInt("id_AGENDAMENTOS"));
+                agendamento.setAMBIENTE_ID_AMBIENTES(rset.getInt("AMBIENTE_id_AMBIENTES"));
+                agendamento.setUSUARIO_ID_USUARIO(rset.getInt("USUARIO_id_USUARIO"));
+                agendamento.setData_Hora_Inicio(sdf.format(rset.getTimestamp("Data_Hora_Inicio")));
+                agendamento.setData_Hora_Fim(sdf.format(rset.getTimestamp("Data_Hora_Fim")));
+                agendamento.setData_Hora_Agendamento(sdf.format(rset.getTimestamp("Data_Hora_Agendamento")));
+                agendamento.setStatus_agendamento(rset.getString("Status_agendamento").charAt(0));
+                lista.add(agendamento);
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar os agendamentos do ambiente: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
 }
