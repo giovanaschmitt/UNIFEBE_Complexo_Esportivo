@@ -43,16 +43,16 @@ public class AgendamentosDAOImpl implements IAgendamentosDAOImpl {
                                                              "Data_Hora_Agendamento, " +
                                                              "Status_agendamento) " +
                     "VALUES (" +
-                        "sisagenda.increment_agendamentos.nextval, '" +
-                        agendamento.getAMBIENTE_ID_AMBIENTES() + "', '" +
-                        agendamento.getUSUARIO_ID_USUARIO() + "', " +
-                        "TO_DATE(agendamento.getData_Hora_Inicio(), 'DD/MM/YYYY HH24:MI:SS')," +
-                        "TO_DATE(tagendamento.getData_Hora_Fim() 'DD/MM/YYYY HH24:MI:SS'),"+
-                        "TO_DATE(tagendamento.getData_Hora_Agendamento() 'DD/MM/YYYY HH24:MI:SS'), '"+
+                        "sisagenda.increment_agendamentos.nextval, " +
+                        agendamento.getAMBIENTE_ID_AMBIENTES()+  ", " +
+                        agendamento.getUSUARIO_ID_USUARIO() + ", " +
+                        "TO_DATE('" + agendamento.getData_Hora_Inicio() + "', 'DD/MM/YYYY HH24:MI:SS')," +
+                        "TO_DATE('" + agendamento.getData_Hora_Fim() + "', 'DD/MM/YYYY HH24:MI:SS'),"+
+                        "TO_DATE('" + agendamento.getData_Hora_Agendamento() + "', 'DD/MM/YYYY HH24:MI:SS'), '"+
                         agendamento.getStatus_agendamento() + "')";
 
             linhasAfetadas = this.s.executeUpdate(SQL);
-            System.out.println("Ambiente agendado: " + linhasAfetadas + " linha(s)");
+            System.out.println("\nAmbiente agendado: " + linhasAfetadas + " linha(s)");
         } catch (Exception e) {
             System.out.println("Erro ao agendar o ambiente: " + e.getMessage());
             e.printStackTrace();
@@ -112,11 +112,11 @@ public class AgendamentosDAOImpl implements IAgendamentosDAOImpl {
         int linhasAfetadas = 0;
 
         try {
-            String SQL = "UPDATE sisagenda.ambientes " +
-                         "SET Status_agendamento = 'I'" +
+            String SQL = "UPDATE sisagenda.agendamentos " +
+                         "SET Status_agendamento = " + "'I'" +
                          "WHERE id_AGENDAMENTOS = " + agendamento.getID_AGENDAMENTOS();
             linhasAfetadas = this.s.executeUpdate(SQL);
-            System.out.println("Agendamento cancelado com sucesso: " + linhasAfetadas + " linha(s)");
+            System.out.println("\nAgendamento cancelado com sucesso: " + linhasAfetadas + " linha(s)");
         } catch (Exception e) {
             System.out.println("Erro ao cancelar o agendamento: " + e.getMessage());
             e.printStackTrace();
@@ -212,14 +212,14 @@ public class AgendamentosDAOImpl implements IAgendamentosDAOImpl {
 
      // Consultar todos os agendamentos futuros de um user
      @Override
-     public ArrayList<Agendamentos> consultarAgendamentosUsuarioFuturo(int id_ambiente, int id_usuario) {
+     public ArrayList<Agendamentos> consultarAgendamentosUsuarioFuturo(int id_usuario) {
         ArrayList<Agendamentos> lista = new ArrayList<>();
         LocalDateTime agora = LocalDateTime.now();
         String aux = agora.format(formatter);
 
         try {
             String SQL = "SELECT * FROM sisagenda.agendamentos " +
-                         "WHERE USUARIO_id_USUARIO = " + id_usuario +
+                         "WHERE USUARIO_id_USUARIO = " + id_usuario + " AND " +
                          "Data_Hora_Inicio >= TO_DATE('" + aux + "', 'DD/MM/YYYY HH24:MI:SS')" +
                          "ORDER BY Data_Hora_Inicio";
             ResultSet rset = s.executeQuery(SQL);

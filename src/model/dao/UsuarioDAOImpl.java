@@ -71,6 +71,7 @@ public class UsuarioDAOImpl implements IUsuarioDAOImpl {
 
             if (rset.next()) {
                 usuario = new Usuario();
+                usuario.setId_USUARIO(rset.getInt("Id_USUARIO"));
                 usuario.setNome(rset.getString("Nome"));
                 usuario.setSenha(rset.getString("Senha"));
                 usuario.setMatricula(rset.getInt("Matricula"));

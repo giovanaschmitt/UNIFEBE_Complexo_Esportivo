@@ -3,6 +3,7 @@ package model.dao;
 public class Usuario {
     private String nome;
     private int matricula;
+    private int id_USUARIO;
     private String senha;
     private char tipo; // 'A' para Admin, 'C' para Comum
 
@@ -13,6 +14,13 @@ public class Usuario {
         this.matricula = matricula;
         this.senha = senha;
         this.tipo = tipo;
+    }
+
+    public int getId_USUARIO() {
+        return id_USUARIO;
+    }
+    public void setId_USUARIO(int id_USUARIO) {
+        this.id_USUARIO = id_USUARIO;
     }
 
     public String getNome() { return nome; }

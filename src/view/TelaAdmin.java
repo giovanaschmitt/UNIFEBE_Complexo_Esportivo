@@ -57,7 +57,7 @@ public class TelaAdmin {
             System.out.println("- 5 = Consultar todos os usuários administrativos    -");
             System.out.println("- 6 = Consultar todos os usuários comuns             -");
             System.out.println("-                                                    -");
-            System.out.println("- 0 = Sair do sistema                                -");
+            System.out.println("- 0 = Voltar                                         -");
             System.out.println("------------------------------------------------------");
             System.out.print("\nEscolha uma opção: ");
             opcao = scanner.nextInt();
@@ -184,7 +184,7 @@ public class TelaAdmin {
             System.out.println("- 4 = Consultar todos os ambientes                   -");
             System.out.println("- 5 = Consultar um ambiente pelo seu nome            -");
             System.out.println("-                                                    -");
-            System.out.println("- 0 = Sair do sistema                                -");
+            System.out.println("- 0 = Voltar                                         -");
             System.out.println("------------------------------------------------------");
             System.out.print("\nEscolha uma opção: ");
             opcao = scanner.nextInt();
