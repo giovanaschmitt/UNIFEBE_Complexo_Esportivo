@@ -46,14 +46,21 @@ public class Main {
                     case 'A':
                         new TelaAdmin().sayHello(usuario.getNome());
                         new TelaAdmin().opcoesAcoes();
+
+
+
+
+
                         new TelaAdmin().gerenciarUsuarios();
                         new TelaAdmin().gerenciarAmbientes();
                         new TelaAdmin().gerenciarAgendamentos();
+
                         break;
                     case 'C':
                         new TelaUsuario().sayHello(usuario.getNome());
                         new TelaUsuario().opcoesAcoes();
-
+                        new TelaUsuario().consultarAmbientes();
+                        new TelaUsuario().agendamentoDeAmbientes();
                         break;
                     default:
                         System.out.println(this.RED + "\nErro ao validar o tipo do usuário!" + this.RESET);

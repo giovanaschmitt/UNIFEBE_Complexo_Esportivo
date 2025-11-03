@@ -11,7 +11,7 @@ public class TelaAdmin {
     public TelaAdmin() {
     }
     public void sayHello(String nome){
-        System.out.println("Olá! Bem vindo " + nome + "!");
+        System.out.println("Olá! Bem vindo(a) " + nome + "!");
         System.out.println(this.YELLOW + "\nVOCÊ ESTÁ LOGADO COM UM USUÁRIO ADMINISTRATIVO\n" + this.RESET);
     }
 
@@ -22,6 +22,9 @@ public class TelaAdmin {
         System.out.println("- 1 = Gerenciar usuários                             -");
         System.out.println("- 2 = Gerenciar ambientes                            -");
         System.out.println("- 3 = Gerenciar agendamentos                         -");
+        System.out.println("- 3 = Gerenciar agendamentos                         -");
+        System.out.println("-                                                    -");
+        System.out.println("- 0 = Sair do sistema                                -");
         System.out.println("------------------------------------------------------");
 
         System.out.print("\nEscolha uma opção: ");
@@ -38,6 +41,8 @@ public class TelaAdmin {
         System.out.println("- 4 = Buscar um usuário através do nome              -");
         System.out.println("- 5 = Consultar todos os usuários administrativos    -");
         System.out.println("- 6 = Consultar todos os usuários comuns             -");
+        System.out.println("-                                                    -");
+        System.out.println("- 0 = Sair do sistema                                -");
         System.out.println("------------------------------------------------------");
 
         System.out.print("\nEscolha uma opção: ");
@@ -51,9 +56,10 @@ public class TelaAdmin {
         System.out.println("- 1 = Adicionar um novo ambiente                     -");
         System.out.println("- 2 = Remover um ambiente                            -");
         System.out.println("- 3 = Atualizar o registro de um ambiente            -");
-        System.out.println("- 4 = Buscar um usuário através do nome              -");
-        System.out.println("- 5 = Consultar todos os ambientes                   -");
-        System.out.println("- 6 = Consultar um ambiente pelo seu nome            -");
+        System.out.println("- 4 = Consultar todos os ambientes                   -");
+        System.out.println("- 5 = Consultar um ambiente pelo seu nome            -");
+        System.out.println("-                                                    -");
+        System.out.println("- 0 = Sair do sistema                                -");
         System.out.println("------------------------------------------------------");
 
         System.out.print("\nEscolha uma opção: ");
@@ -70,6 +76,8 @@ public class TelaAdmin {
         System.out.println("- 4 = Consultar todos os agendamentos de um ambiente   -");
         System.out.println("- 5 = Consultar os agendamentos futuros de um ambiente -");
         System.out.println("- 6 = Consultar um ambiente pelo seu nome              -");
+        System.out.println("-                                                      -");
+        System.out.println("- 0 = Sair do sistema                                  -");
         System.out.println("--------------------------------------------------------");
 
         System.out.print("\nEscolha uma opção: ");
