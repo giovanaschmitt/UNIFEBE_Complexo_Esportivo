@@ -1,9 +1,9 @@
 package view;
 
-import model.dao.Usuario;
-import model.dao.Ambientes;
+import model.dao.*;
 import model.dao.UsuarioService;
 import model.service.AmbienteService;
+import model.dao.AgendamentosService;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -18,6 +18,7 @@ public class TelaAdmin {
     private Scanner scanner = new Scanner(System.in);
     private UsuarioService usuarioService = new UsuarioService();
     private AmbienteService ambienteService = new AmbienteService();
+    private AgendamentosService agendamentoService = new AgendamentosService();
 
     public TelaAdmin() {}
 
@@ -282,27 +283,144 @@ public class TelaAdmin {
         pausaVoltarMenu();
     }
 
-    // ----------- Gerência de agendamentos: implementar aqui, mantendo o padrão -----------
-
+    // ----------- GERÊNCIA DE AGENDAMENTOS -----------
     public void gerenciarAgendamentos() {
-        System.out.print("\n");
-        System.out.println("--------------------------------------------------------");
-        System.out.println("================ GESTÃO DE AGENDAMENTOS ================");
-        System.out.println("--------------------------------------------------------");
-        System.out.println("- 1 = Adicionar um novo agendamento                    -");
-        System.out.println("- 2 = Cancelar um agendamento                          -");
-        System.out.println("- 3 = Consultar todos os agendamentos de um usuário    -");
-        System.out.println("- 4 = Consultar todos os agendamentos de um ambiente   -");
-        System.out.println("- 5 = Consultar os agendamentos futuros de um ambiente -");
-        System.out.println("- 6 = Consultar um ambiente pelo seu nome              -");
-        System.out.println("-                                                      -");
-        System.out.println("- 0 = Sair do sistema                                  -");
-        System.out.println("--------------------------------------------------------");
+        int opcao;
+        do {
+            System.out.print("\n");
+            System.out.println("--------------------------------------------------------");
+            System.out.println("================ GESTÃO DE AGENDAMENTOS ================");
+            System.out.println("--------------------------------------------------------");
+            System.out.println("- 1 = Adicionar um novo agendamento                    -");
+            System.out.println("- 2 = Cancelar um agendamento                          -");
+            System.out.println("- 3 = Consultar todos os agendamentos de um usuário    -");
+            System.out.println("- 4 = Consultar todos os agendamentos de um ambiente   -");
+            System.out.println("- 5 = Consultar agendamentos futuros de um ambiente    -");
+            System.out.println("-                                                      -");
+            System.out.println("- 0 = Voltar                                           -");
+            System.out.println("--------------------------------------------------------");
 
-        System.out.print("\nEscolha uma opção: ");
+            System.out.print("\nEscolha uma opção: ");
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch(opcao) {
+                case 1:
+                    adicionarAgendamento();
+                    break;
+                case 2:
+                    cancelarAgendamento();
+                    break;
+                case 3:
+                    consultarAgendamentosUsuario();
+                    break;
+                case 4:
+                    consultarAgendamentosAmbiente();
+                    break;
+                case 5:
+                    consultarAgendamentosFuturosAmbiente();
+                    break;
+                case 0:
+                    System.out.println("Saindo do menu de agendamentos...");
+                    break;
+                default:
+                    opcaoInvalida();
+            }
+        } while (opcao != 0);
     }
 
-    public void opcaoInvalida() {
-        System.out.println(this.YELLOW + "\nOpção inválida" + this.RESET);
+    private void adicionarAgendamento() {
+        Agendamentos a = new Agendamentos();
+        System.out.print("ID do ambiente: ");
+        a.setAMBIENTE_ID_AMBIENTES(scanner.nextInt());
+        System.out.print("ID do usuário: ");
+        a.setUSUARIO_ID_USUARIO(scanner.nextInt());
+        scanner.nextLine();
+        System.out.print("Data e hora início (yyyy-MM-dd HH:mm): ");
+        a.setData_Hora_Inicio(scanner.nextLine());
+        System.out.print("Data e hora fim (yyyy-MM-dd HH:mm): ");
+        a.setData_Hora_Fim(scanner.nextLine());
+        a.setStatus_agendamento('A');
+        boolean ok = agendamentoService.adicionarAgendamento(a);
+        if (ok)
+            System.out.println(GREEN + "Agendamento realizado com sucesso!" + RESET);
+        else
+            System.out.println(RED + "Erro ao criar agendamento!" + RESET);
+        pausaVoltarMenu();
+    }
+
+    private void cancelarAgendamento() {
+        System.out.print("ID do agendamento a cancelar: ");
+        int idAgendamento = scanner.nextInt();
+        scanner.nextLine();
+        boolean ok = agendamentoService.cancelarAgendamento(idAgendamento);
+        if (ok)
+            System.out.println(GREEN + "Agendamento cancelado com sucesso!" + RESET);
+        else
+            System.out.println(RED + "Erro ao cancelar agendamento!" + RESET);
+        pausaVoltarMenu();
+    }
+
+    private void consultarAgendamentosUsuario() {
+        System.out.print("Informe a matrícula do usuário: ");
+        int matricula = scanner.nextInt();
+        scanner.nextLine();
+
+        // Busca agendamentos pela matrícula
+        ArrayList<Agendamentos> lista = agendamentoService.consultarAgendamentosUsuario(matricula);
+        if (lista.isEmpty()) {
+            System.out.println(YELLOW + "Nenhum agendamento encontrado para esse usuário." + RESET);
+        } else {
+            for (Agendamentos a : lista) {
+                System.out.println("ID: " + a.getID_AGENDAMENTOS() +
+                        " | Ambiente: " + a.getAMBIENTE_ID_AMBIENTES() +
+                        " | Início: " + a.getData_Hora_Inicio() +
+                        " | Fim: " + a.getData_Hora_Fim() +
+                        " | Status: " + a.getStatus_agendamento());
+            }
+        }
+        pausaVoltarMenu();
+    }
+
+    private void consultarAgendamentosAmbiente() {
+        System.out.print("ID do ambiente: ");
+        int idAmbiente = scanner.nextInt();
+        scanner.nextLine();
+        ArrayList<Agendamentos> lista = agendamentoService.consultarAgendamentosAmbiente(idAmbiente);
+        if (lista.isEmpty()) {
+            System.out.println(YELLOW + "Nenhum agendamento encontrado para esse ambiente." + RESET);
+        } else {
+            for (Agendamentos a : lista) {
+                System.out.println("ID: " + a.getID_AGENDAMENTOS() +
+                        " | Usuário: " + a.getUSUARIO_ID_USUARIO() +
+                        " | Início: " + a.getData_Hora_Inicio() +
+                        " | Fim: " + a.getData_Hora_Fim() +
+                        " | Status: " + a.getStatus_agendamento());
+            }
+        }
+        pausaVoltarMenu();
+    }
+
+    private void consultarAgendamentosFuturosAmbiente() {
+        System.out.print("ID do ambiente: ");
+        int idAmbiente = scanner.nextInt();
+        scanner.nextLine();
+        ArrayList<Agendamentos> lista = agendamentoService.consultarAgendamentosFuturosAmbiente(idAmbiente);
+        if (lista.isEmpty()) {
+            System.out.println(YELLOW + "Nenhum agendamento futuro encontrado para esse ambiente." + RESET);
+        } else {
+            for (Agendamentos a : lista) {
+                System.out.println("ID: " + a.getID_AGENDAMENTOS() +
+                        " | Usuário: " + a.getUSUARIO_ID_USUARIO() +
+                        " | Início: " + a.getData_Hora_Inicio() +
+                        " | Fim: " + a.getData_Hora_Fim() +
+                        " | Status: " + a.getStatus_agendamento());
+            }
+        }
+        pausaVoltarMenu();
+    }
+
+    private void opcaoInvalida() {
+        System.out.println(YELLOW + "\nOpção inválida" + RESET);
     }
 }
