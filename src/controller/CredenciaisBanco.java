@@ -3,7 +3,7 @@ package controller;
 public class CredenciaisBanco {
     // Credencias de acesso ao banco de dados
     private String database = "orcl";
-    private String IP = "192.168.1.9";
+    private String IP = "192.168.1.107";
     private String user = "sisagenda";
     private String pwd_banco = "sisagenda";
 
