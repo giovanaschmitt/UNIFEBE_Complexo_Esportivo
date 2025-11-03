@@ -48,11 +48,10 @@ public class TelaUsuario {
         System.out.println("--------------------------------------------------------");
         System.out.println("============== AGENDAMENTOS DOS AMBIENTES ==============");
         System.out.println("--------------------------------------------------------");
-        System.out.println("- 1 = Pesquisar ambientes                              -");
-        System.out.println("- 2 = Adicionar um novo agendamento                    -");
-        System.out.println("- 3 = Cancelar um agendamento                          -");
-        System.out.println("- 4 = Consultar todos os meus agendamentos             -");
-        System.out.println("- 5 = Consultar horários já ocupados de um ambiente    -");
+        System.out.println("- 1 = Agendar um ambiente                              -");
+        System.out.println("- 2 = Cancelar um agendamento                          -");
+        System.out.println("- 3 = Consultar todos os meus agendamentos             -");
+        System.out.println("- 4 = Consultar horários já ocupados de um ambiente    -");
         System.out.println("-                                                      -");
         System.out.println("- 0 = Sair do sistema                                  -");
         System.out.println("--------------------------------------------------------");
