@@ -14,6 +14,7 @@ public class Main {
     final String BLUE = "\u001B[34m";
     final String RED = "\u001B[31m";
     final String GREEN = "\u001B[32m";
+    final String YELLOW = "\u001B[33m";
 
     private ValidarLogin validarLogin = new ValidarLogin();
 
@@ -43,24 +44,56 @@ public class Main {
                 usuario = funcaoUser.buscarUsuarioPorMatricula(matricula);
 
                 switch (usuario.getTipo()) {
+
                     case 'A':
                         new TelaAdmin().sayHello(usuario.getNome());
-                        new TelaAdmin().opcoesAcoes();
+                        do {
+                            new TelaAdmin().opcoesAcoes();
+                            opcao = leia.nextInt();
 
+                            switch (opcao) {
+                                case 1:
+                                    new TelaAdmin().gerenciarUsuarios();
+                                    break;
+                                case 2:
+                                    new TelaAdmin().gerenciarAmbientes();
+                                    break;
+                                case 3:
+                                    new TelaAdmin().gerenciarAgendamentos();
+                                    break;
+                                case 0:
+                                    replay = 0;
+                                    break;
+                                default:
+                                    new TelaAdmin().opcaoInvalida();
+                                    break;
+                            }
 
-
-
-
-                        new TelaAdmin().gerenciarUsuarios();
-                        new TelaAdmin().gerenciarAmbientes();
-                        new TelaAdmin().gerenciarAgendamentos();
-
+                        } while (replay == 1);
                         break;
                     case 'C':
                         new TelaUsuario().sayHello(usuario.getNome());
-                        new TelaUsuario().opcoesAcoes();
-                        new TelaUsuario().consultarAmbientes();
-                        new TelaUsuario().agendamentoDeAmbientes();
+                        do {
+                            new TelaUsuario().opcoesAcoes();
+                            opcao = leia.nextInt();
+
+                            switch (opcao) {
+                                case 1:
+                                    new TelaUsuario().consultarAmbientes();
+                                    break;
+                                case 2:
+                                    new TelaUsuario().agendamentoDeAmbientes();
+                                    break;
+                                case 0:
+                                    replay = 0;
+                                    break;
+                                default:
+                                    new TelaAdmin().opcaoInvalida();
+                                    break;
+                            }
+
+                        } while (replay == 1);
+
                         break;
                     default:
                         System.out.println(this.RED + "\nErro ao validar o tipo do usuário!" + this.RESET);
@@ -77,7 +110,7 @@ public class Main {
             }
 
         } while (replay == 1);
-        System.out.println("\nSistema encerrando...");
+        System.out.println(this.YELLOW + "\nSistema encerrando..." + this.RESET);
 
 
     }

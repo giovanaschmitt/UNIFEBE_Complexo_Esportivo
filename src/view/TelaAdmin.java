@@ -16,12 +16,12 @@ public class TelaAdmin {
     }
 
     public void opcoesAcoes() {
+        System.out.print("\n");
         System.out.println("------------------------------------------------------");
         System.out.println("=========== ESCOLHA UMA AÇÃO PARA REALIZAR ===========");
         System.out.println("------------------------------------------------------");
         System.out.println("- 1 = Gerenciar usuários                             -");
         System.out.println("- 2 = Gerenciar ambientes                            -");
-        System.out.println("- 3 = Gerenciar agendamentos                         -");
         System.out.println("- 3 = Gerenciar agendamentos                         -");
         System.out.println("-                                                    -");
         System.out.println("- 0 = Sair do sistema                                -");
@@ -83,5 +83,8 @@ public class TelaAdmin {
         System.out.print("\nEscolha uma opção: ");
     }
 
+    public void opcaoInvalida() {
+        System.out.println(this.YELLOW + "\nOpção inválida" + this.RESET);
+    }
 
 }

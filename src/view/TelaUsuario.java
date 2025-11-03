@@ -16,6 +16,7 @@ public class TelaUsuario {
     }
 
     public void opcoesAcoes() {
+        System.out.print("\n");
         System.out.println("------------------------------------------------------");
         System.out.println("=========== ESCOLHA UMA AÇÃO PARA REALIZAR ===========");
         System.out.println("------------------------------------------------------");
@@ -57,6 +58,10 @@ public class TelaUsuario {
         System.out.println("--------------------------------------------------------");
 
         System.out.print("\nEscolha uma opção: ");
+    }
+
+    public void opcaoInvalida() {
+        System.out.println(this.YELLOW + "\nOpção inválida" + this.RESET);
     }
 
 }
